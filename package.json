@@ -1,0 +1,20 @@
+{
+  "name": "project-manager",
+  "version": "1.0.0",
+  "description": "task tracker app",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "server": "nodemon server"
+  },
+  "author": "Djordje Radanovic",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "config": "^3.3.6",
+    "express": "^4.17.1",
+    "express-validator": "^6.12.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.13.7"
+  }
+}
