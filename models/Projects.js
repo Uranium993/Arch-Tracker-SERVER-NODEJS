@@ -128,6 +128,10 @@ const ProjectSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  year: {
+    type: String,
+    default: new Date().getFullYear(),
+  },
 });
 
 module.exports = Projects = mongoose.model("projects", ProjectSchema);

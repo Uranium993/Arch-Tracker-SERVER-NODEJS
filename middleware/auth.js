@@ -30,7 +30,16 @@ function authRole(req, res, next) {
   next();
 }
 
+function authRoleScraper(req, res, next) {
+  if (req.user.role !== "admin") {
+    res.status(401);
+    return res.send("You are not authorized, access denied");
+  }
+  next();
+}
+
 module.exports = {
   authUser,
   authRole,
+  authRoleScraper,
 };

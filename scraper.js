@@ -1,14 +1,27 @@
 const puppeteer = require("puppeteer");
+const connectDB = require("./config/db");
+//const cron = require("node-cron");
+const Users = require("./models/Users");
 
 const loginBot = async () => {
-  const browser = await puppeteer.launch({ headless: false });
+  connectDB();
+
+  const admin = await Users.findOne({ role: "admin" });
+
+  const scraperEmail = admin.scraperCredentials.email;
+  const scraperPassword = admin.scraperCredentials.password;
+
+  const browser = await puppeteer.launch({
+    headless: false,
+    arg: ["--no-sandbox"],
+  });
   const page = await browser.newPage();
   await page.goto("https://morning-cove-85067.herokuapp.com/login");
   await page.waitForSelector("input");
   await page.focus(".form > div > input[type='email']");
-  await page.keyboard.type("vesna@gmail.com", { delay: 100 });
+  await page.keyboard.type(scraperEmail);
   await page.focus(".form > div > input[type='password']");
-  await page.keyboard.type("vesna123", { delay: 100 });
+  await page.keyboard.type(scraperPassword);
   await page.click(".btn.btn-primary");
   await page.waitForSelector("td");
   const options = {
@@ -28,10 +41,27 @@ const loginBot = async () => {
     return scrapedData;
   });
 
-  await console.log(grabExperience);
+  const dataToSave = await grabExperience;
+
+  await new ScrapeData({
+    company: dataToSave[0],
+    level: dataToSave[1],
+  }).save((err, data) => {
+    if (err) console.log(err);
+    console.log(data);
+  });
+
+  // await ScrapeData.create({ dataArray }, (err, data) => {
+  //   if (err) console.log("error log", err);
+  //   console.log(data);
+  // });
+
   // setTimeout(() => {
   //   console.log(grabExperience);
   // }, 3000);
 };
+
+//cron.schedule("* * * * *", () => loginBot())
+//loginBot();
 
 module.exports.loginBot = loginBot;

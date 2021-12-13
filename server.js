@@ -4,7 +4,7 @@ const cors = require("cors");
 const app = express();
 const mysql = require("mysql2");
 const axios = require("axios");
-const scraper = require("./scraper");
+// const scraper = require("./scraper");
 const http = require("http");
 
 const corsOptions = {
@@ -16,8 +16,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 connectDB();
-
-scraper.loginBot();
 
 app.use(express.json({ extended: false }));
 

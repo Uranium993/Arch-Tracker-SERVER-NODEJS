@@ -23,6 +23,11 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+
+  scraperCredentials: {
+    email: String,
+    password: String,
+  },
 });
 
 module.exports = Users = mongoose.model("user", UserSchema);

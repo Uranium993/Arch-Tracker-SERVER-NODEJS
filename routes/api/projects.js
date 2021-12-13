@@ -4,15 +4,50 @@ const { authUser, authRole } = require("../../middleware/auth");
 const Users = require("../../models/Users");
 const Projects = require("../../models/Projects");
 const { check, validationResult } = require("express-validator");
+// const scraper = require("../../scraper");
 
 // @route    GET api/projects
 // @desc     Get all projects
 // @access   Private
 router.get("/", authUser, async (req, res) => {
   try {
-    const projects = await Projects.find({ inactive: false }).sort({
+    const projects = await Projects.find({
+      inactive: false,
+    }).sort({
       date: -1,
     });
+
+    res.json(projects);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// @route    GET api/projects
+// @desc     Get all archived projects
+// @access   Private
+router.get("/archived/:menuKey", authUser, async (req, res) => {
+  const { menuKey } = req.params;
+
+  try {
+    const projects = await Projects.find(
+      {
+        inactive: true,
+        year: menuKey,
+      },
+      {
+        clientName: 1,
+        finalWorth: 1,
+        creatorName: 1,
+        codename: 1,
+      }
+    ).sort({
+      date: -1,
+    });
+
+    console.log(projects);
+
     res.json(projects);
   } catch (err) {
     console.error(err.message);

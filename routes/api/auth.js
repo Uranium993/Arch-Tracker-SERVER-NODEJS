@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { authUser, authRole } = require("../../middleware/auth");
+const {
+  authUser,
+  authRole,
+  authRoleScraper,
+} = require("../../middleware/auth");
 const Users = require("../../models/Users");
 const { check, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
@@ -16,8 +20,10 @@ router.get("/", async (req, res) => {
 
     let adminUser = await Users.findOne({ role: "admin" }).exec();
 
-    if (adminUser === "admin") {
+    if (adminUser.role === "admin") {
       return res.json({ errors: [{ msg: "Admin already exists" }] });
+    } else {
+      adminUser = false;
     }
 
     res.json(adminUser);
@@ -26,6 +32,32 @@ router.get("/", async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
+
+router.post(
+  "/scraperCredentials",
+  authUser,
+  authRoleScraper,
+  async (req, res) => {
+    try {
+      const { email, password } = req.body;
+
+      console.log(req.body);
+
+      await Users.findOneAndUpdate(
+        { role: "admin" },
+        {
+          scraperCredentials: {
+            email: email,
+            password: password,
+          },
+        },
+        (data) => res.json(data)
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
 
 //@rute   POST api/auth
 //@desc   login user
@@ -49,16 +81,12 @@ router.post(
 
       const user = await Users.findOne({ email });
       if (!user) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: "Invalid credentials" }] });
+        return res.status(400).json({ errors: "Invalid credentials" });
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: "Invalid Credentials" }] });
+        return res.status(401).json({ errors: "Invalid Credentials" });
       }
 
       const payload = {
@@ -70,6 +98,7 @@ router.post(
       };
 
       const userName = user.name;
+      const role = user.role;
 
       jwt.sign(
         payload,
@@ -77,7 +106,7 @@ router.post(
 
         (err, token) => {
           if (err) throw err;
-          const resData = { token, userName };
+          const resData = { token, userName, role };
           res.json({ resData });
         }
       );
