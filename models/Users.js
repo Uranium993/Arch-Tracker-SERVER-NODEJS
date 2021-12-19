@@ -28,6 +28,8 @@ const UserSchema = new mongoose.Schema({
     email: String,
     password: String,
   },
+
+  scraperData: { company: String, level: String },
 });
 
 module.exports = Users = mongoose.model("user", UserSchema);

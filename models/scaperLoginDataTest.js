@@ -10,6 +10,11 @@ const scraperLoginDataSchema = Schema({
     email: String,
     password: String,
   },
+
+  scraperData: {
+    company: String,
+    level: String,
+  },
 });
 
 module.exports = scraperLoginData = mongoose.model(

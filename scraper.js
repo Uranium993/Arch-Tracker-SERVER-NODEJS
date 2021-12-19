@@ -43,14 +43,24 @@ const loginBot = async () => {
 
   const dataToSave = await grabExperience;
 
-  await new ScrapeData({
-    company: dataToSave[0],
-    level: dataToSave[1],
-  }).save((err, data) => {
-    if (err) console.log(err);
-    console.log(data);
-  });
+  console.log(dataToSave);
 
+  const res = await Users.findOneAndUpdate(
+    {
+      role: "admin",
+    },
+    {
+      $set: {
+        "scraperData.company": dataToSave[0],
+        "scraperData.level": dataToSave[1],
+      },
+      // company: dataToSave[0],
+      // level: dataToSave[1],
+    },
+    { upsert: true, new: true }
+  );
+
+  await console.log(res);
   // await ScrapeData.create({ dataArray }, (err, data) => {
   //   if (err) console.log("error log", err);
   //   console.log(data);
@@ -62,6 +72,6 @@ const loginBot = async () => {
 };
 
 //cron.schedule("* * * * *", () => loginBot())
-//loginBot();
+loginBot();
 
 module.exports.loginBot = loginBot;
