@@ -7,6 +7,10 @@ const ProjectSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "user",
   },
+  firebaseUserId: {
+    type: String,
+    ref: "user",
+  },
 
   creatorName: {
     type: String,
@@ -37,21 +41,23 @@ const ProjectSchema = new Schema({
       },
       color: {
         type: String,
-        default: "gray",
+        default: "#d9d9d9",
       },
-      docs: [
-        { docName: { type: String, default: "struja" }, chk: false },
-        { docName: { type: String, default: "voda" }, chk: false },
-        { docName: { type: String, default: "gas" }, chk: false },
-        {
-          docName: { type: String, default: "atmosferska kanalizacija" },
-          chk: false,
-        },
-        { docName: { type: String, default: "put" }, chk: false },
-        { docName: { type: String, default: "posebni uslovi" }, chk: false },
-        { docName: { type: String, default: "urbanizam" }, chk: false },
-        { docName: { type: String, default: "lokacijski uslovi" }, chk: false },
-      ],
+      date: String,
+
+      //   docs: [
+      //     { docName: { type: String, default: "struja" }, chk: false },
+      //     { docName: { type: String, default: "voda" }, chk: false },
+      //     { docName: { type: String, default: "gas" }, chk: false },
+      //     {
+      //       docName: { type: String, default: "atmosferska kanalizacija" },
+      //       chk: false,
+      //     },
+      //     { docName: { type: String, default: "put" }, chk: false },
+      //     { docName: { type: String, default: "posebni uslovi" }, chk: false },
+      //     { docName: { type: String, default: "urbanizam" }, chk: false },
+      //     { docName: { type: String, default: "lokacijski uslovi" }, chk: false },
+      //   ],
     },
     {
       name: {
@@ -60,18 +66,20 @@ const ProjectSchema = new Schema({
       },
       color: {
         type: String,
-        default: "gray",
+        default: "#d9d9d9",
       },
-      docs: [
-        {
-          docName: { type: String, default: "naknada za zemljiste" },
-          chk: false,
-        },
-        {
-          docName: { type: String, default: "rjesenje o izgradnji" },
-          chk: false,
-        },
-      ],
+      date: String,
+
+      // docs: [
+      // {
+      // docName: { type: String, default: "naknada za zemljiste" },
+      // chk: false,
+      // },
+      // {
+      // docName: { type: String, default: "rjesenje o izgradnji" },
+      // chk: false,
+      // },
+      // ],
     },
     {
       name: {
@@ -80,18 +88,20 @@ const ProjectSchema = new Schema({
       },
       color: {
         type: String,
-        default: "gray",
+        default: "#d9d9d9",
       },
-      docs: [
-        {
-          docName: { type: String, default: "naknada za zemljiste" },
-          chk: false,
-        },
-        {
-          docName: { type: String, default: "gradjevinska dozvola" },
-          chk: false,
-        },
-      ],
+      date: String,
+
+      // docs: [
+      //   {
+      //     docName: { type: String, default: "naknada za zemljiste" },
+      //     chk: false,
+      //   },
+      //   {
+      //     docName: { type: String, default: "gradjevinska dozvola" },
+      //     chk: false,
+      //   },
+      // ],
     },
     {
       name: {
@@ -100,14 +110,16 @@ const ProjectSchema = new Schema({
       },
       color: {
         type: String,
-        default: "gray",
+        default: "#d9d9d9",
       },
-      docs: [
-        {
-          docName: { type: String, default: "prihvacen projekat" },
-          chk: false,
-        },
-      ],
+      date: String,
+
+      // docs: [
+      //   {
+      //     docName: { type: String, default: "prihvacen projekat" },
+      //     chk: false,
+      //   },
+      // ],
     },
     {
       name: {
@@ -116,11 +128,13 @@ const ProjectSchema = new Schema({
       },
       color: {
         type: String,
-        default: "gray",
+        default: "#d9d9d9",
       },
-      docs: [
-        { docName: { type: String, default: "upotrebna dozvola" }, chk: false },
-      ],
+      date: String,
+
+      // docs: [
+      //   { docName: { type: String, default: "upotrebna dozvola" }, chk: false },
+      // ],
     },
   ],
 

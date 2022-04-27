@@ -6,9 +6,10 @@ const mysql = require("mysql2");
 const axios = require("axios");
 // const scraper = require("./scraper");
 const http = require("http");
+const { createProxyMiddleware } = require("http-proxy-middleware");
 
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: true,
   credentials: true,
   optionSuccessStatus: 200,
 };
@@ -16,8 +17,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 connectDB();
-
-app.use(express.json({ extended: false }));
+//app.use(express.urlencoded({ limit: "50mb" }));
+app.use(express.json({ extended: false, limit: "50mb" }));
 
 app.use("/api/users", require("./routes/api/users"));
 app.use("/api/auth", require("./routes/api/auth"));

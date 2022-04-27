@@ -41,7 +41,7 @@ const loginBot = async () => {
     return scrapedData;
   });
 
-  const dataToSave = await grabExperience;
+  const dataToSave = grabExperience;
 
   console.log(dataToSave);
 
@@ -72,6 +72,6 @@ const loginBot = async () => {
 };
 
 //cron.schedule("* * * * *", () => loginBot())
-loginBot();
+//loginBot();
 
 module.exports.loginBot = loginBot;
