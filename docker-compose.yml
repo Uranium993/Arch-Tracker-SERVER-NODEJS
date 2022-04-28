@@ -1,0 +1,5 @@
+inventory:
+  build: .
+  command: npm start
+  ports:
+    - "8080:8080"

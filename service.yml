@@ -1,0 +1,10 @@
+services:
+  inventory:
+    git_url: git@gitlab.com:Uranium993/pm-server.git
+    git_branch: native-branch
+    command: npm start
+    build_root: .
+    ports:
+      - container: 8080
+        http: 80
+        https: 443
